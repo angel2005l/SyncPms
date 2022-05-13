@@ -1,13 +1,13 @@
-package com.pms.userUptAuto.userAuto;
+package com.pms.sync;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserAutoApplication {
+public class SyncPmsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserAutoApplication.class, args);
+		SpringApplication.run(SyncPmsApplication.class, args);
 	}
 
 }

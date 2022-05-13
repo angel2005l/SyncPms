@@ -1,4 +1,4 @@
-package com.pms.userUptAuto.userAuto.util;
+package com.pms.sync.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 public class POIUtil {
 
@@ -49,23 +50,20 @@ public class POIUtil {
 		 * @version V1.0
 		 * @param <T>
 		 */
-		public static <T> List<Map<String, String>> readExcel(String path,
+		public static <T> List<Map<String, String>> readExcel(MultipartFile excelFile,
 				boolean isHasHeader, Integer columnCount, boolean isStringFirst,Class<T> ref)
 				throws IOException {
-			if (path.equals("")) {
-				throw new IOException("文件路径不能为空！");
-			} else {
-				File file = new File(path);
-				if (!file.exists()) {
-					throw new IOException("文件不存在！");
-				}
-			}
+			if (null== excelFile || excelFile.isEmpty()) {
+				throw new IOException("文件不存在！");
+			} 
+			
+			String fileName = excelFile.getOriginalFilename();
 			// 获取扩展名
-			String ext = path.substring(path.lastIndexOf(".") + 1);
+			String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
 			try {
 				if (!"xlsx".equals(ext)) 
 					throw new IOException("当前只支持文件扩展名为xlsx的Excel文件！");
-				return readExcelXlsx(path, isHasHeader, columnCount,
+				return readExcelXlsx(excelFile, isHasHeader, columnCount,
 							isStringFirst,ref);
 			} catch (IOException e) {
 				throw e;
@@ -155,13 +153,13 @@ public class POIUtil {
 		 * @param <T>
 		 */
 		@SuppressWarnings({ "resource", "static-access" })
-		private static <T> List<Map<String, String>> readExcelXlsx(String path,
+		private static <T> List<Map<String, String>> readExcelXlsx(MultipartFile excelFile,
 				boolean isHasHeader, Integer columnCount, boolean isStringFirst,Class<T> ref)
 				throws IOException {
 			try {
 				if(!isHasHeader)
 					throw new IOException("第一行必须为标题行");
-				XSSFWorkbook xssfWorkbook = new XSSFWorkbook(path);
+				XSSFWorkbook xssfWorkbook = new XSSFWorkbook(excelFile.getInputStream());
 				// 循环工作表Sheet
 				// for(int numSheet = 0; numSheet <
 				// xssfWorkbook.getNumberOfSheets();

@@ -1,4 +1,4 @@
-package com.pms.userUptAuto.userAuto.util;
+package com.pms.sync.util;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
