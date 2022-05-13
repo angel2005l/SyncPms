@@ -24,20 +24,32 @@ public class DepartService {
 	private DepartMapper departMapper;
 	@Autowired
 	private UserMapper userMapper;
-
+	
+	/**
+	 * 
+	 * @Description:组织同步方法
+	 * @param departs
+	 * @return
+	 * @throws Exception 
+	 * @author: huanggya
+	 * @date: 2022年5月13日上午10:52:05
+	 * @version:版本
+	 */
 	public Result<Object> syncDepart(List<Map<String, String>> departs) throws Exception {
 		// 校验处理数据集
 		if (departs == null || departs.isEmpty()) {
 			return new Result<>(Result.ERROR, "组织架构处理数据为空！");
 		}
-//		for (Map<String, String> addDepart : departs) {
-//			if (!checkDepartExists(addDepart.get("deptCode"))) {
-//				addDepartInfo(addDepart);
-//			}
-//		}
-//		for (Map<String, String> uptDepart : departs) {
-//			uptDepartInfo(uptDepart);
-//		}
+		// 防止父类组织新增导致更新失效
+		for (Map<String, String> addDepart : departs) {
+			if (!checkDepartExists(addDepart.get("deptCode"))) {
+				addDepartInfo(addDepart);
+			}
+		}
+		// 统一完成更新组织
+		for (Map<String, String> uptDepart : departs) {
+			uptDepartInfo(uptDepart);
+		}
 		// 完成后生成PATH
 		uptDeptNoPath();
 		return new Result<Object>(Result.SUCCESS, "组织更新完成，共计处理组织" + departs.size());
@@ -89,21 +101,6 @@ public class DepartService {
 			newDepart.setDeptCode(depart.get("deptCode"));
 			newDepart.setDeptName(depart.get("deptName"));
 
-			// 根据父类Code 获得父类deptno excel存值只有code
-//			String parentDepartCode = newDepart.getParentDeptNo();
-//			String parentDepartCode = depart.get("parentDeptNo");
-//			
-//			String parentDepartNo = departMapper.selDeptNoByDepartCode(parentDepartCode);
-//			if (!StringUtils.isEmpty(parentDepartNo)) {
-//				newDepart.setParentDeptNo(parentDepartNo);
-//			}
-//			// 根据VP工号，获得VP的userId
-//			String userVp = newDepart.getUserVp();
-//			depart.get("userVp");
-//			String userVpId = userMapper.selUserIdByJobNum(userVp);
-//			if (!StringUtils.isEmpty(userVpId)) {
-//				newDepart.setUserVp(userVpId);
-//			}
 			// 执行保存
 			departMapper.insDepart(newDepart);
 		} catch (Exception e) {

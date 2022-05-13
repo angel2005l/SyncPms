@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pms.sync.entity.Result;
 import com.pms.sync.mue.PmsUserInfoEnum;
-import com.pms.sync.service.PmsAutoUptUserInfoService;
+import com.pms.sync.service.UserService;
 import com.pms.sync.util.POIUtil;
 
 @RestController
@@ -23,7 +23,7 @@ import com.pms.sync.util.POIUtil;
 public class SyncUserController {
 	
 	@Autowired
-	private PmsAutoUptUserInfoService  pmsService;
+	private UserService  pmsService;
 	
 	@PostMapping("index")
 	public Result<List<Map<String, String>>>  updateUserToExcel(@RequestParam(value = "filename") MultipartFile excelFile,
@@ -32,11 +32,8 @@ public class SyncUserController {
 			List<Map<String, String>> pmsUserInfo = POIUtil.readExcel(excelFile, true, 4, true, PmsUserInfoEnum.class);
 			return pmsService.cleanUserInfo(pmsUserInfo);
 			
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new Result<>("500", e.toString());
+			return new Result<>(Result.SUCCESS, e.toString());
 		}
 		
 	}

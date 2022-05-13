@@ -48,7 +48,7 @@ public interface DepartMapper {
 	@ResultMap(value="deptMap")
 	public List<Depart> selDepartWithUpt() throws Exception;
 	
-	@Update("UPDATE CM_DEPART SET DEPT_NO_PATH = #{deptNoPath} where WID = #{wid}")
+	@Update("UPDATE CM_DEPART SET DEPT_NO_PATH = #{deptNoPath},UPT_FLAG='N' where WID = #{wid}")
 	public int uptDepartForDeptNoPath(@Param("wid") String wid, @Param("deptNoPath") String deptNoPath) throws Exception;
 	
 	
