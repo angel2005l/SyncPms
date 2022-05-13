@@ -22,8 +22,8 @@ import com.pms.sync.util.POIUtil;
 
 @RestController
 @RequestMapping("/depart")
-public class DepartController {
-	private static Logger log = LoggerFactory.getLogger(DepartController.class);
+public class SyncDepartController {
+	private static Logger log = LoggerFactory.getLogger(SyncDepartController.class);
 
 	@Autowired
 	private DepartService departService;

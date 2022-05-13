@@ -20,7 +20,7 @@ import com.pms.sync.util.POIUtil;
 
 @RestController
 @RequestMapping("/admin")
-public class PmsAutoUptUserInfoController {
+public class SyncUserController {
 	
 	@Autowired
 	private PmsAutoUptUserInfoService  pmsService;
