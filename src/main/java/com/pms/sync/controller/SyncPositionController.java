@@ -16,24 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pms.sync.entity.Result;
-import com.pms.sync.mue.DepartEnum;
-import com.pms.sync.service.DepartService;
+import com.pms.sync.mue.PositionEnum;
+import com.pms.sync.service.PositionService;
 import com.pms.sync.util.POIUtil;
 
 @RestController
-@RequestMapping("/depart")
-public class SyncDepartController {
-	private static Logger log = LoggerFactory.getLogger(SyncDepartController.class);
+@RequestMapping("/position")
+public class SyncPositionController {
+	private static Logger log = LoggerFactory.getLogger(SyncPositionController.class);
 
 	@Autowired
-	private DepartService departService;
+	private PositionService positionService;
 
 	@PostMapping("sync")
-	public Result<Object> updateDepartToExcel(@RequestParam(value = "filename") MultipartFile excelFile,
+	public Result<Object> updatePositionToExcel(@RequestParam(value = "filename") MultipartFile excelFile,
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
-			List<Map<String, String>> departMaps = POIUtil.readExcel(excelFile, true, 4, true, DepartEnum.class);
-			return departService.syncDepart(departMaps);
+			List<Map<String, String>> positionMaps = POIUtil.readExcel(excelFile, true, 4, true, PositionEnum.class);
+			return positionService.syncPosition(positionMaps);
 		} catch (Exception e) {
 			log.error(e.toString());
 			return new Result<>(Result.ERROR, e.toString());

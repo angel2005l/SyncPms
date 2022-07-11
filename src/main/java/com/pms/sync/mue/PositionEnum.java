@@ -1,15 +1,17 @@
 package com.pms.sync.mue;
 
-public enum PmsUserInfoEnum {
-	JOB_NUMBER("job_number", "工号"),
-	NAME("name", "姓名"),
-	EMP_STATUS("emp_status", "员工当前状态描述"),
-	GRADE_LEVEL("grade_level", "职级");
+public enum PositionEnum {
+
+	
+	POSITION_CODE("positionCode","职位编码"),
+	POSITION_NAME("positionName","职位名称"),
+	PARENT_POSITION_NO("parentPositionNo","上级职位ID"),
+	USER_VP("userVp","职位负责人工号");
 	
 	private String code;
 	private String text;
 
-	private PmsUserInfoEnum(String code, String text) {
+	private PositionEnum(String code, String text) {
 		this.code = code;
 		this.text = text;
 	}

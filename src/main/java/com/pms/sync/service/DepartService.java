@@ -27,13 +27,13 @@ public class DepartService {
 	
 	/**
 	 * 
-	 * @Description:组织同步方法
+	 * @Description:组织同步
 	 * @param departs
 	 * @return
 	 * @throws Exception 
 	 * @author: huanggya
 	 * @date: 2022年5月13日上午10:52:05
-	 * @version:版本
+	 * @version:1.0
 	 */
 	public Result<Object> syncDepart(List<Map<String, String>> departs) throws Exception {
 		// 校验处理数据集
@@ -42,13 +42,19 @@ public class DepartService {
 		}
 		// 防止父类组织新增导致更新失效
 		for (Map<String, String> addDepart : departs) {
-			if (!checkDepartExists(addDepart.get("deptCode"))) {
+			String deptStatus = addDepart.get("deptStatus");
+			if (!checkDepartExists(addDepart.get("deptCode")) && "有效".equals(deptStatus)) {
 				addDepartInfo(addDepart);
 			}
 		}
 		// 统一完成更新组织
 		for (Map<String, String> uptDepart : departs) {
-			uptDepartInfo(uptDepart);
+			String deptStatus = uptDepart.get("deptStatus");
+			if("无效".equals(deptStatus)) {
+				delDepartInfo(uptDepart.get("deptCode"));
+			}else {
+				uptDepartInfo(uptDepart);
+			}
 		}
 		// 完成后生成PATH
 		uptDeptNoPath();
@@ -128,11 +134,11 @@ public class DepartService {
 			}
 			// 根据VP工号，获得VP的userId
 			String userVp = depart.get("userVp");
-			String userVpId = userMapper.selUserIdByJobNum(userVp);
+			String userVpId = userMapper.selUserIdByJobNumber(userVp);
 			if (!StringUtils.isEmpty(userVpId)) {
 				depart.put("userVp", userVpId);
 			} else {
-				depart.put("userVp", "");
+				depart.put("userVp", userVp);
 			}
 			// 执行更新
 			departMapper.uptDepart(depart);
@@ -141,9 +147,17 @@ public class DepartService {
 		}
 	}
 
+	public void delDepartInfo(String deptCode) {
+		try {
+			departMapper.delDepart(deptCode);
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+		
+	}
 	/**
 	 * 
-	 * @Description:递归获取职位Path
+	 * @Description:递归获取组织Path
 	 * @param deptNo
 	 * @return
 	 * @author: huanggya
@@ -180,10 +194,9 @@ public class DepartService {
 	 * @date: 2022年5月11日下午2:05:30
 	 * @version:1.0
 	 */
-	public boolean checkDepartExists(String deptCode) throws Exception {
+	private boolean checkDepartExists(String deptCode) throws Exception {
 		// 根据deptCode查询是否存在 组织
 		int departCot = departMapper.selDepartNumByDeptCode(deptCode);
-		System.err.println(departCot);
 		if (departCot > 0) {
 			return true;
 		}
