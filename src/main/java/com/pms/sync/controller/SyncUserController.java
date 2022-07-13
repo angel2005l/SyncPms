@@ -33,7 +33,7 @@ public class SyncUserController {
 	public Result<Object> updateUserToExcel(@RequestParam(value = "filename") MultipartFile excelFile,
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
-			List<Map<String, String>> users = POIUtil.readExcel(excelFile, true, 4, true, UserEnum.class);
+			List<Map<String, String>> users = POIUtil.readExcel(excelFile, true, 11, true, UserEnum.class);
 			return userService.syncUser(users);
 		} catch (Exception e) {
 			log.error(e.toString());

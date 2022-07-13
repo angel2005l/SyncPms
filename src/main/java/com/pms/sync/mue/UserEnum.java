@@ -12,7 +12,7 @@ public enum UserEnum {
 	VP("vp","VP"),
 	ONE_DEPARTMENT("oneDepartment","一级部门负责人"),
 	TWO_DEPARTMENT("twoDepartment","二级部门负责人"),
-	GRADE_LEVEL("gradeLevel","组织名称");
+	GRADE_LEVEL("gradeLevel","职级");
 	
 	private String code;
 	private String text;

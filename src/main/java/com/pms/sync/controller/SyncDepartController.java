@@ -32,7 +32,7 @@ public class SyncDepartController {
 	public Result<Object> updateDepartToExcel(@RequestParam(value = "filename") MultipartFile excelFile,
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
-			List<Map<String, String>> departMaps = POIUtil.readExcel(excelFile, true, 4, true, DepartEnum.class);
+			List<Map<String, String>> departMaps = POIUtil.readExcel(excelFile, true, 5, true, DepartEnum.class);
 			return departService.syncDepart(departMaps);
 		} catch (Exception e) {
 			log.error(e.toString());

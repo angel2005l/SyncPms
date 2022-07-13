@@ -32,6 +32,17 @@ public class PasswordUtil {
 		return cipherMessage;
 	}
 
+	public static byte[] encode(byte[] paramArrayOfbyte1, byte[] paramArrayOfbyte2) throws Exception {
+		SecretKeySpec secretKeySpec = new SecretKeySpec(paramArrayOfbyte1, CIPHER_DEFAULT_ALGORITHM);
+		Cipher cipher = Cipher.getInstance(CIPHER_DEFAULT_ALGORITHM);
+		cipher.init(1, secretKeySpec);
+		return cipher.doFinal(paramArrayOfbyte2);
+	}
+
+	public static String encode(byte[] paramArrayOfbyte, String paramString) throws Exception {
+		return new String(encode(paramArrayOfbyte, paramString.getBytes()));
+	}
+
 	/**
 	 * 
 	 * @Description:解密逻辑
@@ -92,16 +103,22 @@ public class PasswordUtil {
 	 * @version:1.0
 	 */
 	public static String desEncode(String password) {
-		byte[] keyOfbyte = str2DesByte(CIPHER_DEFAULT_KEY);
-		byte[] rtnEnCodeOfbyte = str2DesByte(password);
+		byte[] arrayOfByte1 = str2DesByte(CIPHER_DEFAULT_KEY);
+		byte[] arrayOfByte2 = null;
 		try {
-			rtnEnCodeOfbyte = getCipherMessage(keyOfbyte, password.getBytes());
+			arrayOfByte2 = encode(arrayOfByte1, password.getBytes());
 		} catch (Exception e) {
-			logger.error("加密工具类异常：" + e.toString());
+			logger.error(e.toString());
 		}
-		return desByte2Str(rtnEnCodeOfbyte);
+		return encodeByByte(arrayOfByte2);
 	}
 
+	private static String encodeByByte(byte[] paramArrayOfbyte) {
+	    StringBuffer stringBuffer = new StringBuffer();
+	    for (byte b = 0; b < paramArrayOfbyte.length; b++)
+	      stringBuffer.append(Integer.toHexString(256 + (paramArrayOfbyte[b] & 0xFF)).substring(1).toUpperCase()); 
+	    return stringBuffer.toString();
+	  }
 	/**
 	 * 
 	 * @Description:解密
@@ -122,10 +139,10 @@ public class PasswordUtil {
 		}
 		return new String(rtnEnCodeOfbyte);
 	}
-	
-	public  static void main(String[] arg) {
-		String pass = "2F2733D3220DFF042E282F13164D102A";
-		String desDecode = PasswordUtil.desDecode(pass);
+
+	public static void main(String[] arg) {
+		String pass = "asd123##";
+		String desDecode = PasswordUtil.desEncode(pass);
 		System.err.println(desDecode);
 	}
 }
