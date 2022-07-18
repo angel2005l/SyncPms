@@ -25,7 +25,7 @@ public interface PositionMapper {
 	@Select("SELECT PARENT_DEPT_NO FROM CM_DEPART_TE WHERE NODE_TYPE = '0' AND  DEPT_CODE = #{positionCode} ")
 	public String selParentPositionNoByPositionCode(String positionCode) throws Exception;
 	
-	@Select("INSERT INTO CM_DEPART_TE(WID,DEPT_NO,DEPT_CODE,DEPT_NAME,DEPT_TYPE,NODE_TYPE,LIMIT_NUM,UPT_FLAG) VALUES(#{wid},#{positionNo},#{positionCode},#{positionName},'SYS_DEPART','0',0,'Y')")
+	@Select("INSERT INTO CM_DEPART_TE(WID,DEPT_NO,DEPT_CODE,DEPT_NAME,PARENT_DEPT_NO,DEPT_TYPE,NODE_TYPE,LIMIT_NUM,UPT_FLAG) VALUES(#{wid},#{positionNo},#{positionCode},#{positionName},#{positionCode},'SYS_DEPART','0',0,'Y')")
 	public Integer insPosition(Position position) throws Exception; 
 	
 	@Update("UPDATE CM_DEPART_TE SET DEPT_NAME=#{positionName},PARENT_DEPT_NO=#{parentPositionNo},USER_VP=#{userVp},UPT_FLAG='Y' where DEPT_CODE =#{positionCode} AND NODE_TYPE = '0'")

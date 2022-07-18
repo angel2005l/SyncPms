@@ -141,8 +141,8 @@ public class PasswordUtil {
 	}
 
 	public static void main(String[] arg) {
-		String pass = "asd123##";
-		String desDecode = PasswordUtil.desEncode(pass);
+		String pass = "B3EA368BBD864693";
+		String desDecode = PasswordUtil.desDecode(pass);
 		System.err.println(desDecode);
 	}
 }

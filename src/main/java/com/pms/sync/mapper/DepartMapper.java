@@ -23,7 +23,7 @@ public interface DepartMapper {
 	@Select("SELECT DEPT_NO FROM CM_DEPART_TE WHERE NODE_TYPE = '1' AND  DEPT_CODE = #{deptCode,jdbcType=VARCHAR} ")
 	public String selDeptNoByDepartCode(String deptCode) throws Exception;
 
-	@Select("INSERT INTO CM_DEPART_TE(WID,DEPT_NO,DEPT_CODE,DEPT_NAME,DEPT_TYPE,NODE_TYPE,LIMIT_NUM,UPT_FLAG) VALUES(#{wid},#{deptNo},#{deptCode,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},'SYS_DEPART','1',0,'Y')")
+	@Select("INSERT INTO CM_DEPART_TE(WID,DEPT_NO,DEPT_CODE,DEPT_NAME,PARENT_DEPT_NO,DEPT_TYPE,NODE_TYPE,LIMIT_NUM,UPT_FLAG) VALUES(#{wid},#{deptNo},#{deptCode,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},#{deptCode,jdbcType=VARCHAR},'SYS_DEPART','1',0,'Y')")
 	public Integer insDepart(Depart depart) throws Exception;
 
 	@Select("UPDATE CM_DEPART_TE SET DEPT_NAME=#{deptName},PARENT_DEPT_NO=#{parentDeptNo,jdbcType=VARCHAR},USER_VP=#{userVp,jdbcType=VARCHAR},UPT_FLAG='Y' where DEPT_CODE =#{deptCode,jdbcType=VARCHAR} AND NODE_TYPE = '1'")

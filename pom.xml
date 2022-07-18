@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.pms.userUptAuto</groupId>
-	<artifactId>userAuto</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>syncPms</artifactId>
+	<version>1.0</version>
 	<name>userAuto</name>
 	<description>FT PMS USER AUTO UPDATE</description>
 	<properties>
@@ -37,6 +37,11 @@
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+  	  <groupId>com.oracle.database.nls</groupId>
+  	  <artifactId>orai18n</artifactId>
+   	  <version>19.7.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
