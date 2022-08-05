@@ -3,6 +3,8 @@ package com.pms.sync.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.midi.SysexMessage;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,8 +70,6 @@ public class UserService {
 	 * @date: 2022年5月23日上午10:28:01
 	 * @version:版本
 	 */
-//	{actualName=吴俞峤, twoDepartment=E000000, gradeLevel=10, sex=男, oneDepartment=E14473, disabled=在职, vp=E00488, userName=wuyjf, email=wuyjf@fotile.com, jobNumber=E91758, departName=103688}
-
 	public void addUser(Map<String, String> user) {
 		try {
 			User newUser = new User();
@@ -101,11 +101,11 @@ public class UserService {
 			newUser.setVp(vpUserId);
 			newUser.setOneDepartment(oneDepartmentUserId);
 			newUser.setTwoDepartment(twoDepartmentUserId);
-			newUser.setGradeLevel(user.get("gradelevel"));
+			newUser.setGradeLevel(user.get("gradeLevel"));
 			// 插入用户信息
 			userMapper.insUser(newUser);
 			userMapper.insDeptUser(userId, departNo);
-//			userMapper.insMsgSubs(userId);
+			userMapper.insMsgSubs(userId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e.toString());
@@ -147,7 +147,8 @@ public class UserService {
 			uptUser.setVp(vpUserId);
 			uptUser.setOneDepartment(oneDepartmentUserId);
 			uptUser.setTwoDepartment(twoDepartmentUserId);
-			uptUser.setGradeLevel(user.get("gradelevel"));
+			uptUser.setGradeLevel(user.get("gradeLevel"));
+			System.err.println(uptUser);
 			// 更新用户信息
 			userMapper.uptUser(uptUser);
 			userMapper.delDeptUser(userId);

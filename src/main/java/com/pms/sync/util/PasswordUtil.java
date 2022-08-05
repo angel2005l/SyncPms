@@ -141,7 +141,7 @@ public class PasswordUtil {
 	}
 
 	public static void main(String[] arg) {
-		String pass = "B3EA368BBD864693";
+		String pass = "2F2733D3220DFF04F88AC71FA0DC2A7D";
 		String desDecode = PasswordUtil.desDecode(pass);
 		System.err.println(desDecode);
 	}
